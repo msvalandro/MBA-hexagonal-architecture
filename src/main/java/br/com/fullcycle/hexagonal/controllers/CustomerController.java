@@ -2,6 +2,7 @@ package br.com.fullcycle.hexagonal.controllers;
 
 import br.com.fullcycle.hexagonal.application.exceptions.ValidationException;
 import br.com.fullcycle.hexagonal.application.usecases.CreateCustomerUseCase;
+import br.com.fullcycle.hexagonal.application.usecases.GetCustomerByIdUseCase;
 import br.com.fullcycle.hexagonal.dtos.CustomerDTO;
 import br.com.fullcycle.hexagonal.models.Customer;
 import br.com.fullcycle.hexagonal.services.CustomerService;
@@ -33,7 +34,9 @@ public class CustomerController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> get(@PathVariable Long id) {
-        var customer = customerService.findById(id);
+        final var useCase = new GetCustomerByIdUseCase(customerService);
+        final var customer = useCase.execute(new GetCustomerByIdUseCase.Input(id));
+
         if (customer.isEmpty()) {
             return ResponseEntity.notFound().build();
         }

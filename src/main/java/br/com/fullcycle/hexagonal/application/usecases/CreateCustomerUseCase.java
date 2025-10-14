@@ -5,12 +5,14 @@ import br.com.fullcycle.hexagonal.application.exceptions.ValidationException;
 import br.com.fullcycle.hexagonal.models.Customer;
 import br.com.fullcycle.hexagonal.services.CustomerService;
 
+import java.util.Objects;
+
 public class CreateCustomerUseCase extends UseCase<CreateCustomerUseCase.Input, CreateCustomerUseCase.Output> {
 
     private final CustomerService customerService;
 
     public CreateCustomerUseCase(CustomerService customerService) {
-        this.customerService = customerService;
+        this.customerService = Objects.requireNonNull(customerService);
     }
 
     @Override
