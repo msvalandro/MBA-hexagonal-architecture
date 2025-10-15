@@ -38,7 +38,7 @@ public class CustomerController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> get(@PathVariable Long id) {
+    public ResponseEntity<?> get(@PathVariable String id) {
         final var customer = getCustomerByIdUseCase.execute(new GetCustomerByIdUseCase.Input(id));
 
         if (customer.isEmpty()) {

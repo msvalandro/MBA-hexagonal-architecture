@@ -1,15 +1,13 @@
 package br.com.fullcycle.hexagonal.application.usecases;
 
+import br.com.fullcycle.hexagonal.application.InMemoryCustomerRepository;
+import br.com.fullcycle.hexagonal.application.entities.Customer;
 import br.com.fullcycle.hexagonal.application.exceptions.ValidationException;
-import br.com.fullcycle.hexagonal.infrastructure.models.Customer;
-import br.com.fullcycle.hexagonal.infrastructure.services.CustomerService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 public class CreateCustomerUseCaseTest {
 
@@ -17,23 +15,15 @@ public class CreateCustomerUseCaseTest {
     @DisplayName("Deve criar um cliente")
     public void testCreateCustomer() {
         // given
-        final var expectedCPF = "12345678901";
+        final var expectedCPF = "123.456.789-01";
         final var expectedEmail = "john.doe@mail.com";
         final var expectedName = "John Doe";
 
+        final var customerRepository = new InMemoryCustomerRepository();
         final var createInput = new CreateCustomerUseCase.Input(expectedCPF, expectedEmail, expectedName);
 
         // when
-        final var customerService = Mockito.mock(CustomerService.class);
-        Mockito.when(customerService.findByCpf(expectedCPF)).thenReturn(Optional.empty());
-        Mockito.when(customerService.findByEmail(expectedEmail)).thenReturn(Optional.empty());
-        Mockito.when(customerService.save(Mockito.any())).thenAnswer(a -> {
-            var customer = a.getArgument(0, Customer.class);
-            customer.setId(UUID.randomUUID().getMostSignificantBits());
-            return customer;
-        });
-
-        final var useCase = new CreateCustomerUseCase(customerService);
+        final var useCase = new CreateCustomerUseCase(customerRepository);
         final var output = useCase.execute(createInput);
 
         // then
@@ -47,24 +37,20 @@ public class CreateCustomerUseCaseTest {
     @DisplayName("Não deve cadastrar um cliente com CPF duplicado")
     public void testCreateWithDuplicatedCPFShouldFail() {
         // given
-        final var expectedCPF = "12345678901";
+        final var expectedCPF = "123.456.789-01";
         final var expectedEmail = "john.doe@mail.com";
         final var expectedName = "John Doe";
         final var expectedError = "Customer already exists";
 
+        final var aCustomer = Customer.newCustomer(expectedName, expectedCPF, expectedEmail);
+
+        final var customerRepository = new InMemoryCustomerRepository();
+        customerRepository.create(aCustomer);
+
         final var createInput = new CreateCustomerUseCase.Input(expectedCPF, expectedEmail, expectedName);
 
-        final var aCustomer = new Customer();
-        aCustomer.setId(UUID.randomUUID().getMostSignificantBits());
-        aCustomer.setCpf(expectedCPF);
-        aCustomer.setEmail(expectedEmail);
-        aCustomer.setName(expectedName);
-
         // when
-        final var customerService = Mockito.mock(CustomerService.class);
-        Mockito.when(customerService.findByCpf(expectedCPF)).thenReturn(Optional.of(aCustomer));
-
-        final var useCase = new CreateCustomerUseCase(customerService);
+        final var useCase = new CreateCustomerUseCase(customerRepository);
         final var actualException = Assertions.assertThrows(ValidationException.class, () -> useCase.execute(createInput));
 
         // then
@@ -75,25 +61,20 @@ public class CreateCustomerUseCaseTest {
     @DisplayName("Não deve cadastrar um cliente com e-mail duplicado")
     public void testCreateWithDuplicatedEmailShouldFail() {
         // given
-        final var expectedCPF = "12345678901";
+        final var expectedCPF = "123.456.789-01";
         final var expectedEmail = "john.doe@mail.com";
         final var expectedName = "John Doe";
         final var expectedError = "Customer already exists";
 
+        final var aCustomer = Customer.newCustomer(expectedName, expectedCPF, expectedEmail);
+
+        final var customerRepository = new InMemoryCustomerRepository();
+        customerRepository.create(aCustomer);
+
         final var createInput = new CreateCustomerUseCase.Input(expectedCPF, expectedEmail, expectedName);
 
-        final var aCustomer = new Customer();
-        aCustomer.setId(UUID.randomUUID().getMostSignificantBits());
-        aCustomer.setCpf(expectedCPF);
-        aCustomer.setEmail(expectedEmail);
-        aCustomer.setName(expectedName);
-
         // when
-        final var customerService = Mockito.mock(CustomerService.class);
-        Mockito.when(customerService.findByCpf(expectedCPF)).thenReturn(Optional.empty());
-        Mockito.when(customerService.findByEmail(expectedEmail)).thenReturn(Optional.of(aCustomer));
-
-        final var useCase = new CreateCustomerUseCase(customerService);
+        final var useCase = new CreateCustomerUseCase(customerRepository);
         final var actualException = Assertions.assertThrows(ValidationException.class, () -> useCase.execute(createInput));
 
         // then
