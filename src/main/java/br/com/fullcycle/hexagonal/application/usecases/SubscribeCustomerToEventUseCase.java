@@ -2,12 +2,10 @@ package br.com.fullcycle.hexagonal.application.usecases;
 
 import br.com.fullcycle.hexagonal.application.UseCase;
 import br.com.fullcycle.hexagonal.application.exceptions.ValidationException;
-import br.com.fullcycle.hexagonal.dtos.EventDTO;
-import br.com.fullcycle.hexagonal.models.Ticket;
-import br.com.fullcycle.hexagonal.models.TicketStatus;
-import br.com.fullcycle.hexagonal.services.CustomerService;
-import br.com.fullcycle.hexagonal.services.EventService;
-import org.springframework.http.ResponseEntity;
+import br.com.fullcycle.hexagonal.infrastructure.models.Ticket;
+import br.com.fullcycle.hexagonal.infrastructure.models.TicketStatus;
+import br.com.fullcycle.hexagonal.infrastructure.services.CustomerService;
+import br.com.fullcycle.hexagonal.infrastructure.services.EventService;
 
 import java.time.Instant;
 import java.util.Objects;

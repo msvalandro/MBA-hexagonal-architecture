@@ -1,8 +1,7 @@
 package br.com.fullcycle.hexagonal.application.usecases;
 
 import br.com.fullcycle.hexagonal.application.UseCase;
-import br.com.fullcycle.hexagonal.services.PartnerService;
-import org.springframework.http.ResponseEntity;
+import br.com.fullcycle.hexagonal.infrastructure.services.PartnerService;
 
 import java.util.Objects;
 import java.util.Optional;
