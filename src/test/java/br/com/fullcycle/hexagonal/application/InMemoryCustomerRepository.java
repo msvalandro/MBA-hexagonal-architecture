@@ -23,7 +23,7 @@ public class InMemoryCustomerRepository implements CustomerRepository {
 
     @Override
     public Optional<Customer> customerOfId(CustomerId anId) {
-        return Optional.ofNullable(this.customers.get(Objects.requireNonNull(anId).value().toString()));
+        return Optional.ofNullable(this.customers.get(Objects.requireNonNull(anId).value()));
     }
 
     @Override
@@ -38,7 +38,7 @@ public class InMemoryCustomerRepository implements CustomerRepository {
 
     @Override
     public Customer create(Customer customer) {
-        this.customers.put(customer.getCustomerId().value().toString(), customer);
+        this.customers.put(customer.getCustomerId().value(), customer);
         this.customersByCPF.put(customer.getCpf().value(), customer);
         this.customersByEmail.put(customer.getEmail().value(), customer);
         return customer;
@@ -46,7 +46,7 @@ public class InMemoryCustomerRepository implements CustomerRepository {
 
     @Override
     public Customer update(Customer customer) {
-        this.customers.put(customer.getCustomerId().value().toString(), customer);
+        this.customers.put(customer.getCustomerId().value(), customer);
         this.customersByCPF.put(customer.getCpf().value(), customer);
         this.customersByEmail.put(customer.getEmail().value(), customer);
         return customer;

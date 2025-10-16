@@ -5,9 +5,7 @@ import br.com.fullcycle.hexagonal.application.entities.Partner;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
-import java.util.Optional;
 import java.util.UUID;
 
 class GetPartnerByIdUseCaseTest {
