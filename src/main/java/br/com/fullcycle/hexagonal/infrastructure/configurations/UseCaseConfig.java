@@ -38,7 +38,7 @@ public class UseCaseConfig {
 
     @Bean
     public CreatePartnerUseCase createPartnerUseCase() {
-        return new CreatePartnerUseCase(partnerService);
+        return new CreatePartnerUseCase(null);
     }
 
     @Bean
@@ -48,7 +48,7 @@ public class UseCaseConfig {
 
     @Bean
     public GetPartnerByIdUseCase  getPartnerByIdUseCase() {
-        return new GetPartnerByIdUseCase(partnerService);
+        return new GetPartnerByIdUseCase(null);
     }
 
     @Bean

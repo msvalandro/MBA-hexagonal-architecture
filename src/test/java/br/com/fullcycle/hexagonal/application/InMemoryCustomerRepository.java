@@ -28,27 +28,27 @@ public class InMemoryCustomerRepository implements CustomerRepository {
 
     @Override
     public Optional<Customer> customerOfCPF(String cpf) {
-        return Optional.ofNullable(this.customers.get(Objects.requireNonNull(cpf)));
+        return Optional.ofNullable(this.customersByCPF.get(Objects.requireNonNull(cpf)));
     }
 
     @Override
     public Optional<Customer> customerOfEmail(String email) {
-        return Optional.ofNullable(this.customers.get(Objects.requireNonNull(email)));
+        return Optional.ofNullable(this.customersByEmail.get(Objects.requireNonNull(email)));
     }
 
     @Override
     public Customer create(Customer customer) {
         this.customers.put(customer.getCustomerId().value().toString(), customer);
-        this.customersByCPF.put(customer.getCpf(), customer);
-        this.customersByEmail.put(customer.getEmail(), customer);
+        this.customersByCPF.put(customer.getCpf().value(), customer);
+        this.customersByEmail.put(customer.getEmail().value(), customer);
         return customer;
     }
 
     @Override
     public Customer update(Customer customer) {
         this.customers.put(customer.getCustomerId().value().toString(), customer);
-        this.customersByCPF.put(customer.getCpf(), customer);
-        this.customersByEmail.put(customer.getEmail(), customer);
+        this.customersByCPF.put(customer.getCpf().value(), customer);
+        this.customersByEmail.put(customer.getEmail().value(), customer);
         return customer;
     }
 }

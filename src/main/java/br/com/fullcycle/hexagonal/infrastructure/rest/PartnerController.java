@@ -37,7 +37,7 @@ public class PartnerController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> get(@PathVariable Long id) {
+    public ResponseEntity<?> get(@PathVariable String id) {
         final var partner = getPartnerByIdUseCase.execute(new GetPartnerByIdUseCase.Input(id));
 
         if (partner.isEmpty()) {

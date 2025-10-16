@@ -27,7 +27,12 @@ public class CreateCustomerUseCase extends UseCase<CreateCustomerUseCase.Input, 
 
         var customer = customerRepository.create(Customer.newCustomer(input.name, input.cpf, input.email));
 
-        return new Output(customer.getCustomerId().value().toString(), customer.getCpf(), customer.getEmail(), customer.getName());
+        return new Output(
+                customer.getCustomerId().value().toString(),
+                customer.getCpf().value(),
+                customer.getEmail().value(),
+                customer.getName().value()
+        );
     }
 
     public record Input(String cpf, String email, String name) {}
