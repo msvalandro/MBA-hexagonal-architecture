@@ -11,7 +11,7 @@ import java.time.Instant;
 import java.util.Objects;
 import java.util.UUID;
 
-@Entity
+@Entity(name = "Ticketq")
 @Table(name = "tickets")
 public class TicketEntity {
 

@@ -18,4 +18,6 @@ public interface PartnerRepository {
     Partner create(Partner partner);
 
     Partner update(Partner partner);
+
+    void deleteAll();
 }
