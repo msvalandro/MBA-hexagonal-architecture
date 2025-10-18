@@ -62,6 +62,6 @@ public class UseCaseConfig {
 
     @Bean
     public SubscribeCustomerToEventUseCase subscribeCustomerToEventUseCase() {
-        return new SubscribeCustomerToEventUseCase(customerRepository, eventRepository, ticketRepository);
+        return new SubscribeCustomerToEventUseCase(customerRepository, eventRepository);
     }
 }
